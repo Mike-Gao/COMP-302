@@ -44,7 +44,11 @@ let mysqrt_tests = [
 ]
 
 (* Q2 TODO: Implement mysqrt. *)
-let mysqrt (x:float) = raise NotImplemented
+let rec mysqrthelper (base, x) = 
+  if close(square(base),x) then base 
+  else mysqrthelper ((x /. base +. base) /. 2.0, x) 
+let mysqrt (x:float) = mysqrthelper(x /. 3.0, x)
+
 
 (* Q3 TODO: Write your own tests for the cube_root function.
             You should NOT test cases for n < 0.
@@ -57,7 +61,10 @@ let cube_root_tests = [
 ]
 
 (* Q3 TODO: Implement cube_root. *)
-let cube_root (x:float) = raise NotImplemented
+let rec mycuberoothelper (base, x) = 
+  if close(cube(base),x) then base 
+  else mycuberoothelper ((x /. base /. base +. base +. base) /. 3.0, x) 
+let cube_root (x:float) = mycuberoothelper(x /. 3.0, x)
 
 (* Q4 TODO: Write your own tests for the fast_exp function.
             You should NOT test cases for negative bases or powers.
