@@ -19,11 +19,16 @@ let rec pairlists twolists =
          You should NOT test lists of different lengths.
 *)
 let w_mean_tests = [ 
+  ([1.0],[1.0]),1.0; 
+  ([1.0; 1.5; 2.5; 0.5; 1.5],[10.3; 11.7; 2.0; 5.0; 6.5]),6.44285714285714217;
+  ([1.0;1.0;1.0],[-2.0;2.0;0.0]),0.0;
 ]
 
 (* Q1b TODO: Implement w_mean. *)
-let w_mean weights data =
-  raise NotImplemented;;
+let w_mean weights data = 
+  let combine = pairlists(weights,data) in
+  let l = List.map(fun(x,y)->x*.y) combine in
+  ((sumlist l)/.(sumlist weights))
 
 
 (* Q2 TODO: Write your own tests for the memberof function. *)
