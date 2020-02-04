@@ -8,11 +8,13 @@ let mapTree_tests =
     Node ( Node ( Node ( Node ( Empty, 6, Empty), 7, Empty) , 3, 
                   Node (Empty, 4, Empty)), 5, Node (Empty, 1, Node (Empty, 2, Empty))
          ); 
+    ((fun x -> x + 1), Empty), Empty;
   ]
 
-let rec mapTree (f, (t: 'a tree)) =
-  
-  raise NotImplemented;;
+let rec mapTree (f, (t: 'a tree)) = 
+  match t with
+  | Empty -> Empty
+  | Node(l,n,r) -> Node(mapTree(f,l),f n,mapTree(f,r))
 (* Question 2. *)
 
 let halfint_tests =
