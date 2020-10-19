@@ -1,0 +1,165 @@
+        OCaml version 4.07.0
+
+Findlib has been successfully loaded. Additional directives:
+  #require "package";;      to load a package
+  #list;;                   to list the available packages
+  #camlp4o;;                to load camlp4 (standard syntax)
+  #camlp4r;;                to load camlp4 (revised syntax)
+  #predicates "p,q,...";;   to set these predicates
+  Topfind.reset();;         to force that packages will be reloaded
+  #thread;;                 to enable threads
+
+# let inc = fun n -> n + 1;;
+
+let foo = inc 5;;
+val inc : int -> int = <fun>
+#   val foo : int = 6
+# let rec fact n =
+  if n = 0 then
+    1
+  else
+    n * fact(n-1);;
+
+val fact : int -> int = <fun>
+
+# fact 5;;
+#   - : int = 120
+# let fastfact n =
+  let rec helper(n,m) =
+    if n = 0 then m
+    else helper(n-1, n * m)
+  in
+  helper(n,1);;
+          val fastfact : int -> int = <fun>
+# 
+# 
+# 
+# 
+# 
+# 
+# let rec fib n =
+  if n = 0 then 0
+  else
+    if n = 1 then 1
+    else (fib (n - 1)) + (fib (n - 2));;
+        val fib : int -> int = <fun>
+# fib 10;;
+- : int = 55
+# fib 20;;
+- : int = 6765
+# fib 30;;
+- : int = 832040
+# fib 40;;
+- : int = 102334155
+# let tailfib n =
+  let rec helper (n,a,b) =
+    if n = 0 then a
+    else
+      if n = 1 then b
+      else helper (n-1, b, a+b)
+  in
+  helper (n, 0, 1);;
+              val tailfib : int -> int = <fun>
+# tailfib 40;;
+- : int = 102334155
+# let sumnums lo hi =
+  if lo > hi then 0
+  else lo + (sumnums (lo + 1) hi);;
+    Characters 53-60:
+    else lo + (sumnums (lo + 1) hi);;
+               ^^^^^^^
+Error: Unbound value sumnums
+# let rec sumnums lo hi =
+  if lo > hi then 0
+  else lo + (sumnums (lo + 1) hi);;
+    val sumnums : int -> int -> int = <fun>
+# sumnums 1 10;;
+- : int = 55
+# let foo = sumnums 5;;
+val foo : int -> int = <fun>
+# foo 10;;
+- : int = 45
+# let tailsum lo hi =
+  let rec helper lo hi tally =
+    if lo > hi then tally
+    else helper (lo + 1) hi (lo + tally)
+  in
+  helper lo hi 0;;
+          val tailsum : int -> int -> int = <fun>
+# tailsum 1 100;;
+- : int = 5050
+# 
+# let rec sum2 (lo, hi) =
+  if lo > hi then 0
+  else lo + sum2(lo+1, hi);;
+    val sum2 : int * int -> int = <fun>
+# sum2 1 10;;
+Characters 0-4:
+  sum2 1 10;;
+  ^^^^
+Error: This function has type int * int -> int
+       It is applied to too many arguments; maybe you forgot a `;'.
+# sum2 (1,10);;
+- : int = 55
+# sum2 1;;
+Characters 5-6:
+  sum2 1;;
+       ^
+Error: This expression has type int but an expression was expected of type
+         int * int
+# 
+# tailsum 5 3;;
+- : int = 0
+# 
+# tailsum -3 7;;
+Characters 0-7:
+  tailsum -3 7;;
+  ^^^^^^^
+Error: This expression has type int -> int -> int
+       but an expression was expected of type int
+# 
+# tailsum (-3) 7;;
+- : int = 22
+# 
+# tailsum ~-3 7;;
+- : int = 22
+# 
+# let silly str =
+  if str = "Prakash" then str ^ " is awesome"
+  else if str = "Prof." then str ^ " Prakash, is incorrect."
+  else "who cares?";;
+      val silly : string -> string = <fun>
+# silly "Trump";;
+- : string = "who cares?"
+# silly "Prakash";;
+- : string = "Prakash is awesome"
+# silly "Prof.";;
+- : string = "Prof. Prakash, is incorrect."
+# silly " Prof.";;
+- : string = "who cares?"
+# let less_silly str =
+  match str with
+  | "Prakash" -> str ^ " is awesome."
+  | "prof." -> str ^ " Prakash, is incorrect."
+  | _ -> "Who cares?";;
+        val less_silly : string -> string = <fun>
+# less_silly "Prakash";;
+- : string = "Prakash is awesome."
+# less_silly "Trump";;
+- : string = "Who cares?"
+# less_silly " ";;
+- : string = "Who cares?"
+# let myadd(n,m) =
+  match (n,m) with
+  | (0,_) -> m
+  | (_,0) -> n
+  | _ -> n + m;;
+        val myadd : int * int -> int = <fun>
+# myadd (3,4);;
+- : int = 7
+# myadd (0,5);;
+- : int = 5
+# myadd (7,0);;
+- : int = 7
+#   <menu-bar> <Tuareg> <Interactive Mode> <Kill OCaml REPL>
+Process OCaml killed: 9
